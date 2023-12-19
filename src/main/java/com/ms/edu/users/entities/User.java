@@ -13,6 +13,9 @@ public class User {
     private String middleName;
     private String email;
 
+    public User() {
+    }
+
     public User(String firstName, String secondName, String middleName, String email) {
         this.firstName = firstName;
         this.secondName = secondName;
