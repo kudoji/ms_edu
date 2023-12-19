@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "users_subscriptions")
+@Table(name = "posts_likes")
 public class PostLike {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
