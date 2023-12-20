@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserService {
     private final UserRepository userRepository;
     private final static String USER_CREATED_INFO = "User w/ name '%s' created, id: %s";
+    private final static String USER_UPDATED_INFO = "User w/ name '%s' updated";
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -28,5 +29,17 @@ public class UserService {
     public User getUser(long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    public String updateUser(User user, long id) {
+        userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        userRepository.save(user);
+
+        return String.format(
+                USER_UPDATED_INFO,
+                user.getSecondName()
+        );
     }
 }
