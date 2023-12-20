@@ -9,6 +9,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String firstName;
+    private String secondName;
+    private String middleName;
+    private String email;
 
     public Long getId() {
         return id;
@@ -29,10 +32,6 @@ public class User {
     public String getEmail() {
         return email;
     }
-
-    private String secondName;
-    private String middleName;
-    private String email;
 
     public User() {
     }
