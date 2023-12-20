@@ -2,7 +2,9 @@ package com.ms.edu.users.services;
 
 import com.ms.edu.users.entities.User;
 import com.ms.edu.users.repositories.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserService {
@@ -21,5 +23,10 @@ public class UserService {
                 userSaved.getFirstName(),
                 userSaved.getId()
         );
+    }
+
+    public User getUser(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }
