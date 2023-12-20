@@ -36,6 +36,8 @@ public class UserService {
     }
 
     public String updateUser(User user, long id) {
+        user.setId(id);
+
         userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
