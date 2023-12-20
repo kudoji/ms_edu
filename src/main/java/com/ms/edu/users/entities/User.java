@@ -1,9 +1,13 @@
 package com.ms.edu.users.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "users")
+@SQLDelete(sql = "update users set deleted = true where id = ?;")
+@Where(clause = "deleted = false")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,6 +16,7 @@ public class User {
     private String secondName;
     private String middleName;
     private String email;
+    private boolean deleted = false;
 
     public Long getId() {
         return id;
@@ -55,6 +60,7 @@ public class User {
                 ", secondName='" + secondName + '\'' +
                 ", middleName='" + middleName + '\'' +
                 ", email='" + email + '\'' +
+                ", deleted=" + deleted +
                 '}';
     }
 }
