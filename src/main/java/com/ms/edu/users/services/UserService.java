@@ -6,6 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+import java.util.stream.StreamSupport;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -55,5 +58,11 @@ public class UserService {
                 USER_DELETED_INFO,
                 id
         );
+    }
+
+    public List<User> getUsers() {
+        return StreamSupport.stream(
+                userRepository.findAll().spliterator(), false
+        ).toList();
     }
 }

@@ -4,6 +4,8 @@ import com.ms.edu.users.entities.User;
 import com.ms.edu.users.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
@@ -29,7 +31,12 @@ public class UserController {
     }
 
     @DeleteMapping(path = "{id}")
-    public String deleteUser(@PathVariable long id){
+    public String deleteUser(@PathVariable long id) {
         return userService.deleteUser(id);
+    }
+
+    @GetMapping
+    public List<User> getUsers() {
+        return userService.getUsers();
     }
 }
