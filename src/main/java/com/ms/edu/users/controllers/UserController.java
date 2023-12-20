@@ -14,12 +14,13 @@ public class UserController {
     }
 
     @PostMapping
-    String createUser(@RequestBody User user) {
+    public String createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 
     @GetMapping(path = "/{id}")
-    User getUser(@PathVariable long id) {
+    public User getUser(@PathVariable long id) {
         return userService.getUser(id);
     }
+
 }
