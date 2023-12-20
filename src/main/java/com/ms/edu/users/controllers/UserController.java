@@ -27,4 +27,9 @@ public class UserController {
     public String updateUser(@RequestBody User user, @PathVariable long id) {
         return userService.updateUser(user, id);
     }
+
+    @DeleteMapping(path = "{id}")
+    public String deleteUser(@PathVariable long id){
+        return userService.deleteUser(id);
+    }
 }
