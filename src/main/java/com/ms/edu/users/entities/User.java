@@ -42,7 +42,19 @@ public class User {
         return email;
     }
 
+    private boolean isDeleted() {
+        return deleted;
+    }
+
     public User() {
+    }
+
+    public User(Long id, User user) {
+        this.id = id;
+        this.firstName = user.getFirstName();
+        this.secondName = user.getSecondName();
+        this.middleName = user.getMiddleName();
+        this.deleted = user.isDeleted();
     }
 
     public User(String firstName, String secondName, String middleName, String email) {
