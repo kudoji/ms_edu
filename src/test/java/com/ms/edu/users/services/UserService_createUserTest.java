@@ -2,9 +2,9 @@ package com.ms.edu.users.services;
 
 import com.ms.edu.users.entities.User;
 import com.ms.edu.users.repositories.UserRepository;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -14,7 +14,7 @@ class UserService_createUserTest {
     private static User user2save;
     private static User userSaved;
 
-    @BeforeTestClass
+    @BeforeAll
     public static void beforeClass() {
         userRepository = Mockito.mock(UserRepository.class);
         userService = new UserService(userRepository);
