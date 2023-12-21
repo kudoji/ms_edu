@@ -2,12 +2,12 @@ package com.ms.edu.users.entities;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Table(name = "users")
 @SQLDelete(sql = "update users set deleted = true where id = ?;")
-@Where(clause = "deleted = false")
+@SQLRestriction(value = "deleted = false")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
