@@ -12,9 +12,6 @@ import java.util.stream.StreamSupport;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    public final static String USER_CREATED_INFO = "User w/ name '%s' created, id: %s";
-    private final static String USER_UPDATED_INFO = "User w/ name '%s' updated";
-    private final static String USER_DELETED_INFO = "User w/ id '%s' deleted";
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
