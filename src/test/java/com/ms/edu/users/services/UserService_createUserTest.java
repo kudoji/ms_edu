@@ -2,11 +2,15 @@ package com.ms.edu.users.services;
 
 import com.ms.edu.users.entities.User;
 import com.ms.edu.users.repositories.UserRepository;
+import jakarta.persistence.PersistenceException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mockito;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UserService_createUserTest {
     private static UserRepository userRepository;
@@ -32,6 +36,18 @@ class UserService_createUserTest {
         assertEquals(
                 userSaved,
                 result
+        );
+    }
+
+    @Test
+    public void validInput_dbProblems() {
+        Mockito.when(userRepository.save(user2save)).thenThrow(PersistenceException.class);
+
+        Executable executable = () -> userService.createUser(user2save);
+
+        assertThrows(
+                PersistenceException.class,
+                executable
         );
     }
 }
