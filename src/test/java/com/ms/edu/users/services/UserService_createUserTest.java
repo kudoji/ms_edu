@@ -49,5 +49,7 @@ class UserService_createUserTest {
                 PersistenceException.class,
                 executable
         );
+
+        Mockito.reset(userRepository);
     }
 }
