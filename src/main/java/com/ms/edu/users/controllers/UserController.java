@@ -16,7 +16,7 @@ public class UserController {
     }
 
     @PostMapping
-    public String createUser(@RequestBody User user) {
+    public User createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 
@@ -26,13 +26,13 @@ public class UserController {
     }
 
     @PutMapping(path = "/{id}")
-    public String updateUser(@RequestBody User user, @PathVariable long id) {
+    public User updateUser(@RequestBody User user, @PathVariable long id) {
         return userService.updateUser(user, id);
     }
 
     @DeleteMapping(path = "/{id}")
-    public String deleteUser(@PathVariable long id) {
-        return userService.deleteUser(id);
+    public void deleteUser(@PathVariable long id) {
+        userService.deleteUser(id);
     }
 
     @GetMapping

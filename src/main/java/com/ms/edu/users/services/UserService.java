@@ -20,14 +20,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public String createUser(User user) {
-        User userSaved = userRepository.save(user);
-
-        return String.format(
-                USER_CREATED_INFO,
-                userSaved.getFirstName(),
-                userSaved.getId()
-        );
+    public User createUser(User user) {
+        return userRepository.save(user);
     }
 
     public User getUser(long id) {
@@ -35,31 +29,21 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public String updateUser(User user, long id) {
+    public User updateUser(User user, long id) {
         user.setId(id);
 
         userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        userRepository.save(user);
-
-        return String.format(
-                USER_UPDATED_INFO,
-                user.getSecondName()
-        );
+        return userRepository.save(user);
     }
 
-    public String deleteUser(long id) {
+    public void deleteUser(long id) {
         if (!userRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
         userRepository.deleteById(id);
-
-        return String.format(
-                USER_DELETED_INFO,
-                id
-        );
     }
 
     public List<User> getUsers() {
