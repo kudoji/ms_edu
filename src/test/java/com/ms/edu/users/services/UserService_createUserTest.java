@@ -37,6 +37,8 @@ class UserService_createUserTest {
                 userSaved,
                 result
         );
+
+        Mockito.reset(userRepository);
     }
 
     @Test
