@@ -27,14 +27,10 @@ class UserService_createUserTest {
     public void validInput_userCreated() {
         Mockito.when(userRepository.save(user2save)).thenReturn(userSaved);
 
-        String result = userService.createUser(user2save);
+        User result = userService.createUser(user2save);
 
         assertEquals(
-                String.format(
-                        UserService.USER_CREATED_INFO,
-                        userSaved.getFirstName(),
-                        userSaved.getId()
-                ),
+                userSaved,
                 result
         );
     }
