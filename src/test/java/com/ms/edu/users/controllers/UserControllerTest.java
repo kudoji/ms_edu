@@ -21,6 +21,8 @@ import static org.hamcrest.Matchers.isA;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @ExtendWith(SpringExtension.class)
 class UserControllerTest {
+    private static final String USERS_URL = "/users";
+
     @Autowired
     private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
@@ -49,7 +51,7 @@ class UserControllerTest {
 
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
-                        .post("/users")
+                        .post(USERS_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(request)
         );
@@ -65,7 +67,7 @@ class UserControllerTest {
 
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
-                        .get("/users/" + userId)
+                        .get(USERS_URL + "/" + userId)
         );
 
         String response = "{\n" +
@@ -94,7 +96,7 @@ class UserControllerTest {
 
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
-                        .put("/users/" + userId)
+                        .put(USERS_URL + "/" + userId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(request)
         );
@@ -118,7 +120,7 @@ class UserControllerTest {
 
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
-                        .delete("/users/" + userId)
+                        .delete(USERS_URL + "/" + userId)
         );
 
         String response = "{\n" +
@@ -138,7 +140,7 @@ class UserControllerTest {
     public void getUsersTest() throws Exception {
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
-                        .get("/users")
+                        .get(USERS_URL)
         );
 
         resultActions
