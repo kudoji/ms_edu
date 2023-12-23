@@ -16,12 +16,17 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isA;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @ExtendWith(SpringExtension.class)
 class UserControllerTest {
     private static final String USERS_URL = "/users";
+    private static final String USER_FN = "fn1";
+    private static final String USER_SN = "sn1";
+    private static final String USER_MN = "mn1";
+    private static final String USER_EMAIL = "fn1@mail.fn";
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -35,18 +40,10 @@ class UserControllerTest {
     @Test
     public void createUserTest() throws Exception {
         String request = "{\n" +
-                "    \"firstName\": \"fn1\",\n" +
-                "    \"secondName\": \"sn1\",\n" +
-                "    \"middleName\": \"mn\",\n" +
-                "    \"email\": \"email\"\n" +
-                "}";
-
-        String response = "{\n" +
-                "    \"id\": 3,\n" +
-                "    \"firstName\": \"fn1\",\n" +
-                "    \"secondName\": \"sn1\",\n" +
-                "    \"middleName\": \"mn\",\n" +
-                "    \"email\": \"email\"\n" +
+                "    \"firstName\": \"" + USER_FN + "\",\n" +
+                "    \"secondName\": \"" + USER_SN + "\",\n" +
+                "    \"middleName\": \"" + USER_MN + "\",\n" +
+                "    \"email\": \"" + USER_EMAIL + "\"\n" +
                 "}";
 
         ResultActions resultActions = mockMvc.perform(
@@ -58,7 +55,12 @@ class UserControllerTest {
 
         resultActions
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-                .andExpect(MockMvcResultMatchers.content().json(response));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", isA(Integer.class)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", is(USER_FN)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.secondName", is(USER_SN)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.middleName", is(USER_MN)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email", is(USER_EMAIL)))
+        ;
     }
 
     @Test
