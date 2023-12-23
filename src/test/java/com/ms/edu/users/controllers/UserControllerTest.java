@@ -58,7 +58,7 @@ class UserControllerTest {
     @Test
     public void getUserTest() throws Exception {
         long userId = 1L;
-        
+
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
                         .get("/users/" + userId)
@@ -67,6 +67,37 @@ class UserControllerTest {
         String response = "{\n" +
                 "    \"id\": " + userId + ",\n" +
                 "    \"firstName\": \"fName1\",\n" +
+                "    \"secondName\": \"sName1\",\n" +
+                "    \"middleName\": \"mName1\",\n" +
+                "    \"email\": \"email1@email.com\"\n" +
+                "}";
+
+        resultActions
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+                .andExpect(MockMvcResultMatchers.content().json(response));
+    }
+
+    @Test
+    public void updateUserTest() throws Exception {
+        long userId = 1L;
+
+        String request = "{\n" +
+                "    \"firstName\": \"fName12\",\n" +
+                "    \"secondName\": \"sName1\",\n" +
+                "    \"middleName\": \"mName1\",\n" +
+                "    \"email\": \"email1@email.com\"\n" +
+                "}";
+
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .put("/users/" + userId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(request)
+        );
+
+        String response = "{\n" +
+                "    \"id\": " + userId + ",\n" +
+                "    \"firstName\": \"fName12\",\n" +
                 "    \"secondName\": \"sName1\",\n" +
                 "    \"middleName\": \"mName1\",\n" +
                 "    \"email\": \"email1@email.com\"\n" +
