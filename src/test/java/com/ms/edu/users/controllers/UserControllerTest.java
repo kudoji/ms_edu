@@ -32,6 +32,15 @@ class UserControllerTest {
     private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
 
+    private String getUserRequest() {
+        return "{\n" +
+                "    \"firstName\": \"" + USER_FN + "\",\n" +
+                "    \"secondName\": \"" + USER_SN + "\",\n" +
+                "    \"middleName\": \"" + USER_MN + "\",\n" +
+                "    \"email\": \"" + USER_EMAIL + "\"\n" +
+                "}";
+    }
+
     @BeforeEach
     public void beforeEach() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -39,12 +48,7 @@ class UserControllerTest {
 
     @Test
     public void createUser_positiveTest() throws Exception {
-        String request = "{\n" +
-                "    \"firstName\": \"" + USER_FN + "\",\n" +
-                "    \"secondName\": \"" + USER_SN + "\",\n" +
-                "    \"middleName\": \"" + USER_MN + "\",\n" +
-                "    \"email\": \"" + USER_EMAIL + "\"\n" +
-                "}";
+        String request = getUserRequest();
 
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
@@ -115,15 +119,12 @@ class UserControllerTest {
     }
 
     @Test
-    public void updateUserTest() throws Exception {
+    public void updateUser_positiveTest() throws Exception {
+        createUser_positiveTest();
+
         long userId = 1L;
 
-        String request = "{\n" +
-                "    \"firstName\": \"fName12\",\n" +
-                "    \"secondName\": \"sName1\",\n" +
-                "    \"middleName\": \"mName1\",\n" +
-                "    \"email\": \"email1@email.com\"\n" +
-                "}";
+        String request = getUserRequest();
 
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
@@ -132,17 +133,32 @@ class UserControllerTest {
                         .content(request)
         );
 
-        String response = "{\n" +
-                "    \"id\": " + userId + ",\n" +
-                "    \"firstName\": \"fName12\",\n" +
-                "    \"secondName\": \"sName1\",\n" +
-                "    \"middleName\": \"mName1\",\n" +
-                "    \"email\": \"email1@email.com\"\n" +
-                "}";
-
         resultActions
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-                .andExpect(MockMvcResultMatchers.content().json(response));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is((int) userId)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", is(USER_FN)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.secondName", is(USER_SN)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.middleName", is(USER_MN)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email", is(USER_EMAIL)))
+        ;
+    }
+
+    @Test
+    public void updateUser_negativeTest() throws Exception {
+        long userId = 1L;
+
+        String request = getUserRequest();
+
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .put(USERS_URL + "/" + userId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(request)
+        );
+
+        resultActions
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+        ;
     }
 
     @Test
