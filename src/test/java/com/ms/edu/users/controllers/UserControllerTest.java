@@ -1,8 +1,6 @@
 package com.ms.edu.users.controllers;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +20,7 @@ import static org.hamcrest.Matchers.isA;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @ExtendWith(SpringExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserControllerTest {
     private static final String USERS_URL = "/users";
     private static final String USER_FN = "fn1";
@@ -50,6 +49,7 @@ class UserControllerTest {
     @Test
     @Order(1)
     public void createUser_positiveTest() throws Exception {
+        System.out.println("createUser_positiveTest");
         long userId = 1L;
         String request = getUserRequest();
 
@@ -71,8 +71,8 @@ class UserControllerTest {
     }
 
     @Test
-    @Order(5)
     public void createUser_negativeTest() throws Exception {
+        System.out.println("createUser_negativeTest");
         String request = "";
 
         ResultActions resultActions = mockMvc.perform(
@@ -90,6 +90,7 @@ class UserControllerTest {
     @Test
     @Order(2)
     public void getUser_positiveTest() throws Exception {
+        System.out.println("getUser_positiveTest");
         long userId = 1L;
 
         ResultActions resultActions = mockMvc.perform(
@@ -108,8 +109,8 @@ class UserControllerTest {
     }
 
     @Test
-    @Order(6)
     public void getUser_negativeTest() throws Exception {
+        System.out.println("getUser_negativeTest");
         long userId = 1L;
 
         ResultActions resultActions = mockMvc.perform(
@@ -125,6 +126,7 @@ class UserControllerTest {
     @Test
     @Order(3)
     public void updateUser_positiveTest() throws Exception {
+        System.out.println("updateUser_positiveTest");
         long userId = 1L;
 
         String request = getUserRequest();
@@ -147,8 +149,8 @@ class UserControllerTest {
     }
 
     @Test
-    @Order(7)
     public void updateUser_negativeTest() throws Exception {
+        System.out.println("updateUser_negativeTest");
         long userId = 1L;
 
         String request = getUserRequest();
@@ -168,6 +170,7 @@ class UserControllerTest {
     @Test
     @Order(4)
     public void deleteUser_positiveTest() throws Exception {
+        System.out.println("deleteUser_positiveTest");
         long userId = 1L;
 
         ResultActions resultActions = mockMvc.perform(
@@ -181,8 +184,8 @@ class UserControllerTest {
     }
 
     @Test
-    @Order(8)
     public void deleteUser_negativeTest() throws Exception {
+        System.out.println("deleteUser_negativeTest");
         long userId = 1L;
 
         ResultActions resultActions = mockMvc.perform(
@@ -197,6 +200,7 @@ class UserControllerTest {
 
     @Test
     public void getUsersTest() throws Exception {
+        System.out.println("getUsersTest");
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
                         .get(USERS_URL)
