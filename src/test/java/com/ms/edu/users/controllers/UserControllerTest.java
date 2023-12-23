@@ -56,7 +56,24 @@ class UserControllerTest {
     }
 
     @Test
-    public void getUserTest() {
+    public void getUserTest() throws Exception {
+        long userId = 1L;
+        
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .get("/users/" + userId)
+        );
 
+        String response = "{\n" +
+                "    \"id\": " + userId + ",\n" +
+                "    \"firstName\": \"fName1\",\n" +
+                "    \"secondName\": \"sName1\",\n" +
+                "    \"middleName\": \"mName1\",\n" +
+                "    \"email\": \"email1@email.com\"\n" +
+                "}";
+
+        resultActions
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+                .andExpect(MockMvcResultMatchers.content().json(response));
     }
 }
