@@ -178,6 +178,20 @@ class UserControllerTest {
     }
 
     @Test
+    public void deleteUser_negativeTest() throws Exception {
+        long userId = 1L;
+
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .delete(USERS_URL + "/" + userId)
+        );
+
+        resultActions
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+        ;
+    }
+
+    @Test
     public void getUsersTest() throws Exception {
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
