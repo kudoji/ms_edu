@@ -107,4 +107,27 @@ class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andExpect(MockMvcResultMatchers.content().json(response));
     }
+
+    @Test
+    public void deleteUserTest() throws Exception {
+        long userId = 1L;
+
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .delete("/users/" + userId)
+        );
+
+        String response = "{\n" +
+                "    \"id\": " + userId + ",\n" +
+                "    \"firstName\": \"fName12\",\n" +
+                "    \"secondName\": \"sName1\",\n" +
+                "    \"middleName\": \"mName1\",\n" +
+                "    \"email\": \"email1@email.com\"\n" +
+                "}";
+
+        resultActions
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+        ;
+    }
+
 }
