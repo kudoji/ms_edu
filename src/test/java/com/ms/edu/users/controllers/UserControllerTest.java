@@ -162,21 +162,15 @@ class UserControllerTest {
     }
 
     @Test
-    public void deleteUserTest() throws Exception {
+    public void deleteUser_positiveTest() throws Exception {
+        createUser_positiveTest();
+
         long userId = 1L;
 
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
                         .delete(USERS_URL + "/" + userId)
         );
-
-        String response = "{\n" +
-                "    \"id\": " + userId + ",\n" +
-                "    \"firstName\": \"fName12\",\n" +
-                "    \"secondName\": \"sName1\",\n" +
-                "    \"middleName\": \"mName1\",\n" +
-                "    \"email\": \"email1@email.com\"\n" +
-                "}";
 
         resultActions
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
