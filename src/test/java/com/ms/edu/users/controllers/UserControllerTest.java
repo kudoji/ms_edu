@@ -80,7 +80,9 @@ class UserControllerTest {
     }
 
     @Test
-    public void getUserTest() throws Exception {
+    public void getUser_positiveTest() throws Exception {
+        createUser_positiveTest();
+
         long userId = 1L;
 
         ResultActions resultActions = mockMvc.perform(
@@ -88,17 +90,28 @@ class UserControllerTest {
                         .get(USERS_URL + "/" + userId)
         );
 
-        String response = "{\n" +
-                "    \"id\": " + userId + ",\n" +
-                "    \"firstName\": \"fName1\",\n" +
-                "    \"secondName\": \"sName1\",\n" +
-                "    \"middleName\": \"mName1\",\n" +
-                "    \"email\": \"email1@email.com\"\n" +
-                "}";
-
         resultActions
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-                .andExpect(MockMvcResultMatchers.content().json(response));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is((int) userId)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", is(USER_FN)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.secondName", is(USER_SN)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.middleName", is(USER_MN)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email", is(USER_EMAIL)))
+        ;
+    }
+
+    @Test
+    public void getUser_negativeTest() throws Exception {
+        long userId = 1L;
+
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .get(USERS_URL + "/" + userId)
+        );
+
+        resultActions
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+        ;
     }
 
     @Test
