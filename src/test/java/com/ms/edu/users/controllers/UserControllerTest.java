@@ -27,7 +27,7 @@ class UserControllerTest {
     }
 
     @Test
-    void createUser() throws Exception {
+    public void createUserTest() throws Exception {
         String request = "{\n" +
                 "    \"firstName\": \"fn1\",\n" +
                 "    \"secondName\": \"sn1\",\n" +
@@ -53,5 +53,10 @@ class UserControllerTest {
         resultActions
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andExpect(MockMvcResultMatchers.content().json(response));
+    }
+
+    @Test
+    public void getUserTest() {
+
     }
 }
