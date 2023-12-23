@@ -1,6 +1,7 @@
 package com.ms.edu.users.controllers;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,9 @@ class UserControllerTest {
     }
 
     @Test
+    @Order(1)
     public void createUser_positiveTest() throws Exception {
+        long userId = 1L;
         String request = getUserRequest();
 
         ResultActions resultActions = mockMvc.perform(
@@ -59,7 +62,7 @@ class UserControllerTest {
 
         resultActions
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", isA(Integer.class)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is((int) userId)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", is(USER_FN)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.secondName", is(USER_SN)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.middleName", is(USER_MN)))
@@ -68,6 +71,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Order(5)
     public void createUser_negativeTest() throws Exception {
         String request = "";
 
@@ -84,9 +88,8 @@ class UserControllerTest {
     }
 
     @Test
+    @Order(2)
     public void getUser_positiveTest() throws Exception {
-        createUser_positiveTest();
-
         long userId = 1L;
 
         ResultActions resultActions = mockMvc.perform(
@@ -105,6 +108,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Order(6)
     public void getUser_negativeTest() throws Exception {
         long userId = 1L;
 
@@ -119,9 +123,8 @@ class UserControllerTest {
     }
 
     @Test
+    @Order(3)
     public void updateUser_positiveTest() throws Exception {
-        createUser_positiveTest();
-
         long userId = 1L;
 
         String request = getUserRequest();
@@ -144,6 +147,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Order(7)
     public void updateUser_negativeTest() throws Exception {
         long userId = 1L;
 
@@ -162,9 +166,8 @@ class UserControllerTest {
     }
 
     @Test
+    @Order(4)
     public void deleteUser_positiveTest() throws Exception {
-        createUser_positiveTest();
-
         long userId = 1L;
 
         ResultActions resultActions = mockMvc.perform(
@@ -178,6 +181,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Order(8)
     public void deleteUser_negativeTest() throws Exception {
         long userId = 1L;
 
