@@ -49,7 +49,6 @@ class UserControllerTest {
     @Test
     @Order(1)
     public void createUser_positiveTest() throws Exception {
-        System.out.println("createUser_positiveTest");
         long userId = 1L;
         String request = getUserRequest();
 
@@ -72,7 +71,6 @@ class UserControllerTest {
 
     @Test
     public void createUser_negativeTest() throws Exception {
-        System.out.println("createUser_negativeTest");
         String request = "";
 
         ResultActions resultActions = mockMvc.perform(
@@ -90,7 +88,6 @@ class UserControllerTest {
     @Test
     @Order(2)
     public void getUser_positiveTest() throws Exception {
-        System.out.println("getUser_positiveTest");
         long userId = 1L;
 
         ResultActions resultActions = mockMvc.perform(
@@ -110,7 +107,6 @@ class UserControllerTest {
 
     @Test
     public void getUser_negativeTest() throws Exception {
-        System.out.println("getUser_negativeTest");
         long userId = 1L;
 
         ResultActions resultActions = mockMvc.perform(
@@ -126,7 +122,6 @@ class UserControllerTest {
     @Test
     @Order(3)
     public void updateUser_positiveTest() throws Exception {
-        System.out.println("updateUser_positiveTest");
         long userId = 1L;
 
         String request = getUserRequest();
@@ -150,7 +145,6 @@ class UserControllerTest {
 
     @Test
     public void updateUser_negativeTest() throws Exception {
-        System.out.println("updateUser_negativeTest");
         long userId = 1L;
 
         String request = getUserRequest();
@@ -170,7 +164,6 @@ class UserControllerTest {
     @Test
     @Order(4)
     public void deleteUser_positiveTest() throws Exception {
-        System.out.println("deleteUser_positiveTest");
         long userId = 1L;
 
         ResultActions resultActions = mockMvc.perform(
@@ -185,7 +178,6 @@ class UserControllerTest {
 
     @Test
     public void deleteUser_negativeTest() throws Exception {
-        System.out.println("deleteUser_negativeTest");
         long userId = 1L;
 
         ResultActions resultActions = mockMvc.perform(
@@ -200,7 +192,6 @@ class UserControllerTest {
 
     @Test
     public void getUsersTest() throws Exception {
-        System.out.println("getUsersTest");
         ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders
                         .get(USERS_URL)
