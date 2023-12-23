@@ -38,7 +38,7 @@ class UserControllerTest {
     }
 
     @Test
-    public void createUserTest() throws Exception {
+    public void createUser_positiveTest() throws Exception {
         String request = "{\n" +
                 "    \"firstName\": \"" + USER_FN + "\",\n" +
                 "    \"secondName\": \"" + USER_SN + "\",\n" +
@@ -60,6 +60,22 @@ class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.secondName", is(USER_SN)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.middleName", is(USER_MN)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", is(USER_EMAIL)))
+        ;
+    }
+
+    @Test
+    public void createUser_negativeTest() throws Exception {
+        String request = "";
+
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .post(USERS_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(request)
+        );
+
+        resultActions
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
         ;
     }
 
