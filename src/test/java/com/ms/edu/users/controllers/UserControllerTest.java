@@ -14,6 +14,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+
+import static org.hamcrest.Matchers.isA;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @ExtendWith(SpringExtension.class)
 class UserControllerTest {
@@ -130,4 +134,16 @@ class UserControllerTest {
         ;
     }
 
+    @Test
+    public void getUsersTest() throws Exception {
+        ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .get("/users")
+        );
+
+        resultActions
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.*", isA(ArrayList.class)))
+        ;
+    }
 }
