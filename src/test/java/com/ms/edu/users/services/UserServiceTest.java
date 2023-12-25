@@ -28,7 +28,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void validInput_userCreated() {
+    public void createUser_positiveTest() {
         Mockito.when(userRepository.save(user2save)).thenReturn(userSaved);
 
         User result = userService.createUser(user2save);
@@ -42,7 +42,7 @@ class UserServiceTest {
     }
 
     @Test
-    public void validInput_dbProblems() {
+    public void createUser_negativeTest() {
         Mockito.when(userRepository.save(user2save)).thenThrow(PersistenceException.class);
 
         Executable executable = () -> userService.createUser(user2save);
