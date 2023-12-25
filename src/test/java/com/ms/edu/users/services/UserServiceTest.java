@@ -119,4 +119,19 @@ class UserServiceTest {
 
         Mockito.reset(userRepository);
     }
+
+    @Test
+    public void deleteUser_negativeTest() {
+        long userId = 10L;
+        Mockito.when(userRepository.existsById(Mockito.anyLong())).thenReturn(false);
+
+        Executable executable = () -> userService.deleteUser(userId);
+
+        assertThrows(
+                ResponseStatusException.class,
+                executable
+        );
+
+        Mockito.reset(userRepository);
+    }
 }
