@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class UserService_createUserTest {
+class UserServiceTest {
     private static UserRepository userRepository;
     private static UserService userService;
     private static User user2save;
