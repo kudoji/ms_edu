@@ -7,7 +7,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mockito;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -49,6 +51,36 @@ class UserServiceTest {
 
         assertThrows(
                 PersistenceException.class,
+                executable
+        );
+
+        Mockito.reset(userRepository);
+    }
+
+    @Test
+    public void getUser_positiveTest() {
+        long userId = 10L;
+        Mockito.when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.ofNullable(userSaved));
+
+        User result = userService.getUser(userId);
+
+        assertEquals(
+                userSaved,
+                result
+        );
+
+        Mockito.reset(userRepository);
+    }
+
+    @Test
+    public void getUser_negativeTest() {
+        long userId = 10L;
+        Mockito.when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
+
+        Executable executable = () -> userService.getUser(userId);
+
+        assertThrows(
+                ResponseStatusException.class,
                 executable
         );
 
