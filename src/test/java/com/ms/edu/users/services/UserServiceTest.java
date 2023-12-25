@@ -86,4 +86,37 @@ class UserServiceTest {
 
         Mockito.reset(userRepository);
     }
+
+    @Test
+    public void updateUser_positiveTest() {
+        long userId = 10L;
+        Mockito.when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.ofNullable(userSaved));
+        Mockito.when(userRepository.save(user2save)).thenReturn(userSaved);
+
+        User result = userService.updateUser(user2save, userId);
+
+        assertEquals(
+                userSaved,
+                result
+        );
+        assertEquals(userId, user2save.getId());
+
+        Mockito.reset(userRepository);
+    }
+
+    @Test
+    public void updateUser_negativeTest() {
+        long userId = 10L;
+        Mockito.when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
+        Mockito.when(userRepository.save(user2save)).thenReturn(userSaved);
+
+        Executable executable = () -> userService.updateUser(user2save, userId);
+
+        assertThrows(
+                ResponseStatusException.class,
+                executable
+        );
+
+        Mockito.reset(userRepository);
+    }
 }
