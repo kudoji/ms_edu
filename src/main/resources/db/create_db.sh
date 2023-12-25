@@ -11,4 +11,5 @@ docker run --detach \
   -p 5433:5432 \
   postgres:16.1
 
-docker
+docker cp ./init.sql ms_postgres:/docker-entrypoint-initdb.d/init.sql
+docker exec -u postgres ms_postgres psql users pguser -f docker-entrypoint-initdb.d/init.sql
